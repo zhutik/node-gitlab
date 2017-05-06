@@ -59,4 +59,16 @@ class ProjectMergeRequests extends BaseModel
       note:             note
     @post "projects/#{Utils.parseProjectId projectId}/merge_request/#{parseInt mergerequestId}/comments", params, (data) => fn data if fn
 
+  getNotes: (projectId, mergerequestId, fn = null) =>
+    @debug "Projects::getMergeRequestNotes()"
+    @get "projects/#{Utils.parseProjectId projectId}/merge_requests/" +
+      "#{parseInt mergerequestId}/notes",
+      (data) -> fn data if fn
+
+  getNote: (projectId, mergerequestId, noteId, fn = null) =>
+    @debug "Projects::getMergeRequestNote()"
+    @get "projects/#{Utils.parseProjectId projectId}/merge_requests/" +
+        "#{parseInt mergerequestId}/notes/#{parseInt noteId}",
+      (data) -> fn data if fn
+
 module.exports = (client) -> new ProjectMergeRequests client
